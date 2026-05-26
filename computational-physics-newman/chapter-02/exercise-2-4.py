@@ -1,50 +1,19 @@
-"""
-Exercise 2.5: Quantum potential step
-
-A well-known quantum mechanics problem involves a particle of mass m that encoun-
-ters a one-dimensional potential step, like this:
-
-
-         |            ....... E
-      R  |     T      _______ V
-    <--  |   -->     |
- incoming|           |
-    -->  |           |
-_________|___________|___________
-         0
-
-The particle with initial kinetic energy E and wavevector k1 = sqrt(2mE)/hbar 
-enters from the left and encounters a sudden jump in potential energy of height 
-V at position x = 0. By solving the Schrödinger equation, one can show that 
-when E > V the particle may either:
-  (a) pass the step, in which case it has a lower kinetic energy of E - V on 
-      the other side and a correspondingly smaller wavevector of 
-      k2 = sqrt(2m(E - V))/hbar, or 
-  (b) it may be reflected, keeping all of its kinetic energy and an unchanged 
-      wavevector but moving in the opposite direction. 
-
-The probabilities T and R for transmission and reflection are given by:
-  T = (4 * k1 * k2) / (k1 + k2)^2
-  R = ((k1 - k2) / (k1 + k2))^2
-
-Suppose we have a particle with mass equal to the electron mass 
-m = 9.11 x 10^-31 kg and energy 10 eV encountering a potential step of height 9 eV. 
-Write a Python program to compute and print out the transmission and reflection 
-probabilities using the formulas above.
-"""
+# Exercise 2.4: A spaceship travels from Earth in a straight line at relativistic 
+# speed v to another planet x light years away. Write a program to ask the user 
+# for the value of x and the speed v as a fraction of the speed of light c, then 
+# print out the time in years that the spaceship takes to reach its destination 
+# (a) in the rest frame of an observer on Earth and (b) as perceived by a 
+# passenger on board the ship. Use your program to calculate the answers for a 
+# planet 10 light years away with v = 0.99c.
 
 from math import sqrt
 
+c = 2.99e8 # Speed of light measured in m/s
+b = float(input("Enter speed of the spaceship as a fraction of the speed of light c (0-1.0): "))
+x = float(input("Enter distance in light years to destination: "))
+v = b*c
+t_earth = x / b # Earth's frame
+t_passenger = t_earth*sqrt(1-b**2) # Passenger's frame
 
-m = 9.11e-31 # Electron mass
-E = 10 # Initial electron's kinetic energy measured in eV.
-V = 9 # Potential step measured in eV.
-h = 6.63e-34 # Planck's constant in m^2kg/s
-k1 = sqrt(2*m*E)/h
-k2 = sqrt(2*m*(E-V))/h
-T = (4*k1*k2)/(k1+k2)**2
-R = ((k1-k2)/(k1+k2))**2
-
-print(f"Probability of transmission: {T:.4f}")
-print(f"Probability of reflection: {R:.4f}")
-print(f"Total probability: {T+R:.4f}") # Should always equal 1.0
+print(f"Time in years to reach destination (Earth's frame): {t_earth:.2f}")
+print(f"Time in years to reach destination (Passenger's frame): {t_passenger:.2f}")
